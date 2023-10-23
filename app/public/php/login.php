@@ -7,20 +7,24 @@
     }
 
     if (isset($_POST["email"])) {
-        $email = $_POST["email"];
+                $email = $_POST["email"];
         $pwd = $_POST["pwd"];
-        require_once("db.php");
-        $user = getUser($dbConn, $email);
-        if (!$user) {
-            $errorMsg = 'Incorrect credentials';
-        } else {
-            $hashedPwd = md5($pwd);
-            if ($hashedPwd !== $user["pwd"]) {
+        require_once("validate.php");
+        $errorMsg = validateLogin($email, $pwd);
+        if (!$errorMsg) {
+            require_once("db.php");
+            $user = getUser($dbConn, $email);
+            if (!$user) {
                 $errorMsg = 'Incorrect credentials';
             } else {
-                $_SESSION["email"] = $email;
-                header('location: index.php');
-                exit();
+                $hashedPwd = md5($pwd);
+                if ($hashedPwd !== $user["pwd"]) {
+                    $errorMsg = 'Incorrect credentials';
+                } else {
+                    $_SESSION["email"] = $email;
+                    header('location: index.php');
+                    exit();
+                }
             }
         }
     }

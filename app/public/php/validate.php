@@ -15,3 +15,13 @@ function validateSignup($email, $pwd, $repeatPwd) {
     }
     return false;
 }
+
+function validateLogin($email, $pwd) {
+    if (empty($email)) {
+        return 'No email provided';
+    }
+    if (empty($pwd)) {
+        return 'No password provided';
+    }
+    return false;
+}

@@ -10,7 +10,7 @@
         $email = $_POST["email"];
         $pwd = $_POST["pwd"];
         $repeatPwd = $_POST["repeat-pwd"];
-        require_once('validate_signup.php');
+        require_once('validate.php');
         $errorMsg = validateSignup($email, $pwd, $repeatPwd);
         if ($errorMsg === false) {
             require_once("db.php");
