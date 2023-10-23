@@ -24,3 +24,22 @@ function createUser($dbConn, $email, $pwd) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
+
+function getUser($dbConn, $email) {
+    $sql = "SELECT * FROM users WHERE email=?;";
+    $stmt = mysqli_stmt_init($dbConn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die('Error getting the user from DB');
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $row = mysqli_fetch_assoc($resultData);
+
+    mysqli_stmt_close($stmt);
+
+    return $row;
+}
