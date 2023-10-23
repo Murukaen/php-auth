@@ -1,4 +1,11 @@
 <?php
+    session_start();
+    
+    if (isset($_SESSION["email"])) {
+        header('location: index.php');
+        exit();
+    }
+
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
         $pwd = $_POST["pwd"];
@@ -9,10 +16,9 @@
             require_once("db.php");
             $errorMsg = createUser($dbConn, $email, $pwd);
             if (!$errorMsg) {
-            session_start();
-            $_SESSION["email"] = $email;
-            header('location: index.php');
-            exit();
+                $_SESSION["email"] = $email;
+                header('location: index.php');
+                exit();
             }
         }
     }

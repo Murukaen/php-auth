@@ -1,4 +1,11 @@
 <?php
+    session_start();
+
+    if (isset($_SESSION["email"])) {
+        header('location: index.php');
+        exit();
+    }
+
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
         $pwd = $_POST["pwd"];
@@ -11,6 +18,7 @@
             if ($hashedPwd !== $user["pwd"]) {
                 $errorMsg = 'Incorrect credentials';
             } else {
+                $_SESSION["email"] = $email;
                 header('location: index.php');
                 exit();
             }
