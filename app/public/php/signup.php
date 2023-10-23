@@ -6,6 +6,8 @@
         require_once('validate_signup.php');
         $errorMsg = validateSignup($email, $pwd, $repeatPwd);
         if ($errorMsg === false) {
+            require_once("db.php");
+            createUser($dbConn, $email, $pwd);
             session_start();
             $_SESSION["email"] = $email;
             header('location: index.php');

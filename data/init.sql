@@ -1,6 +1,6 @@
 USE `php-auth`;
 
-CREATE TABLE test (
-    id int,
-    name varchar(255)
+CREATE TABLE users (
+    email varchar(128) PRIMARY KEY,
+    pwd varchar(256) NOT NULL
 );
