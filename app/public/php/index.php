@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (isset($_SESSION["email"])) {
-    echo 'You are logged in as ' . $_SESSION["email"];
-    // TODO Add logout link
+    echo '<p> You are logged in as ' . $_SESSION["email"] . '</p>';
+    echo '<a href="logout.php">Logout</a>';
 } else {
     header('location: login.php');
 }
