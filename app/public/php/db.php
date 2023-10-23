@@ -21,8 +21,16 @@ function createUser($dbConn, $email, $pwd) {
     $hashedPwd = md5($pwd);
 
     mysqli_stmt_bind_param($stmt, "ss", $email, $hashedPwd);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+    try {
+        mysqli_stmt_execute($stmt);
+    } catch (mysqli_sql_exception $e) {
+        $code = $e->getCode();
+        if ($code === 1062) { // duplicate entry
+            return 'Email already exists';
+        }
+    } finally {
+        mysqli_stmt_close($stmt);
+    }
 }
 
 function getUser($dbConn, $email) {

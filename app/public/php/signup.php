@@ -7,11 +7,13 @@
         $errorMsg = validateSignup($email, $pwd, $repeatPwd);
         if ($errorMsg === false) {
             require_once("db.php");
-            createUser($dbConn, $email, $pwd);
+            $errorMsg = createUser($dbConn, $email, $pwd);
+            if (!$errorMsg) {
             session_start();
             $_SESSION["email"] = $email;
             header('location: index.php');
             exit();
+            }
         }
     }
 ?>
